@@ -1,0 +1,17 @@
+{
+    "byte_order":  "little",
+    "packing":  1,
+    "packet":  {
+                   "name":  "frame_tail_t",
+                   "description":  "数据帧帧尾",
+                   "c_declaration":  "typedef __PACKED_STRUCT",
+                   "fields":  [
+                                  {
+                                      "type":  "uint16_t",
+                                      "name":  "CRC16",
+                                      "comment":  "整帧 CRC16 校验",
+                                      "value":  0
+                                  }
+                              ]
+               }
+}

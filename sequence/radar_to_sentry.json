@@ -1,0 +1,173 @@
+{
+  "byte_order": "little",
+  "packing": 1,
+  "packet_sequence": [
+    {
+      "name": "frame_header_t",
+      "description": "数据帧帧头",
+      "c_declaration": "typedef __PACKED_STRUCT",
+      "fields": [
+        {
+          "type": "uint8_t",
+          "name": "SOF",
+          "comment": "帧起始字节（固定 0xA5）",
+          "value": "0xA5"
+        },
+        {
+          "type": "uint16_t",
+          "name": "data_length",
+          "comment": "数据帧 data 长度",
+          "value": {
+            "dynamic": "size(ext_robot_interaction_data_t)"
+          }
+        },
+        {
+          "type": "uint8_t",
+          "name": "seq",
+          "comment": "包序号",
+          "value": 0
+        },
+        {
+          "type": "uint8_t",
+          "name": "CRC8",
+          "comment": "帧头 CRC8 校验",
+          "value": {
+            "dynamic": "crc(8,1,SOF,1,seq)"
+          }
+        },
+        {
+          "type": "uint16_t",
+          "name": "cmd_id",
+          "comment": "控制命令 ID",
+          "value": "0x0301"
+        }
+      ]
+    },
+    {
+      "name": "ext_robot_interaction_data_t",
+      "description": "机器人交互数据",
+      "c_declaration": "typedef __PACKED_STRUCT",
+      "fields": [
+        {
+          "type": "uint16_t",
+          "name": "data_cmd_id",
+          "comment": "数据命令 ID",
+          "value": "0x0201"
+        },
+        {
+          "type": "uint16_t",
+          "name": "sender_id",
+          "comment": "发送者 ID",
+          "value": 0
+        },
+        {
+          "type": "uint16_t",
+          "name": "receiver_id",
+          "comment": "接收者 ID",
+          "value": 0
+        },
+        {
+          "type": "uint8_t",
+          "name": "data_type",
+          "comment": "收到的数据类型",
+          "value": "0x05"
+        },
+        {
+          "kind": "struct",
+          "type": "map_robot_data_t",
+          "name": "enemy_map_data",
+          "comment": "敌方机器人地图坐标",
+          "fields": [
+            {
+              "type": "uint16_t",
+              "name": "hero_position_x",
+              "comment": "英雄机器人 X 坐标",
+              "value": 114
+            },
+            {
+              "type": "uint16_t",
+              "name": "hero_position_y",
+              "comment": "英雄机器人 Y 坐标",
+              "value": 514
+            },
+            {
+              "type": "uint16_t",
+              "name": "engineer_position_x",
+              "comment": "工程机器人 X 坐标",
+              "value": 0
+            },
+            {
+              "type": "uint16_t",
+              "name": "engineer_position_y",
+              "comment": "工程机器人 Y 坐标",
+              "value": 0
+            },
+            {
+              "type": "uint16_t",
+              "name": "infantry_3_position_x",
+              "comment": "步兵 3 号 X 坐标",
+              "value": 0
+            },
+            {
+              "type": "uint16_t",
+              "name": "infantry_3_position_y",
+              "comment": "步兵 3 号 Y 坐标",
+              "value": 0
+            },
+            {
+              "type": "uint16_t",
+              "name": "infantry_4_position_x",
+              "comment": "步兵 4 号 X 坐标",
+              "value": 0
+            },
+            {
+              "type": "uint16_t",
+              "name": "infantry_4_position_y",
+              "comment": "步兵 4 号 Y 坐标",
+              "value": 0
+            },
+            {
+              "type": "uint16_t",
+              "name": "infantry_5_position_x",
+              "comment": "步兵 5 号 X 坐标",
+              "value": 0
+            },
+            {
+              "type": "uint16_t",
+              "name": "infantry_5_position_y",
+              "comment": "步兵 5 号 Y 坐标",
+              "value": 0
+            },
+            {
+              "type": "uint16_t",
+              "name": "sentry_position_x",
+              "comment": "哨兵机器人 X 坐标",
+              "value": 0
+            },
+            {
+              "type": "uint16_t",
+              "name": "sentry_position_y",
+              "comment": "哨兵机器人 Y 坐标",
+              "value": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "frame_tail_t",
+      "description": "数据帧帧尾",
+      "c_declaration": "typedef __PACKED_STRUCT",
+      "fields": [
+        {
+          "type": "uint16_t",
+          "name": "CRC16",
+          "comment": "整帧 CRC16 校验",
+          "value": {
+            "dynamic": "crc(16,1,SOF,2,enemy_map_data.sentry_position_y)"
+          }
+        }
+      ]
+    }
+  ]
+}

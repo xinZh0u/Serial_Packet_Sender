@@ -1,0 +1,43 @@
+{
+    "byte_order":  "little",
+    "packing":  1,
+    "packet":  {
+                   "name":  "frame_header_t",
+                   "description":  "数据帧帧头",
+                   "c_declaration":  "typedef __PACKED_STRUCT",
+                   "fields":  [
+                                  {
+                                      "type":  "uint8_t",
+                                      "name":  "SOF",
+                                      "comment":  "帧起始字节（固定 0xA5）",
+                                      "value":  "0xA5"
+                                  },
+                                  {
+                                      "type":  "uint16_t",
+                                      "name":  "data_length",
+                                      "comment":  "数据帧 data 长度",
+                                      "value":  {
+                                                    "dynamic":  "size(ext_robot_interaction_data_t)"
+                                                }
+                                  },
+                                  {
+                                      "type":  "uint8_t",
+                                      "name":  "seq",
+                                      "comment":  "包序号",
+                                      "value":  0
+                                  },
+                                  {
+                                      "type":  "uint8_t",
+                                      "name":  "CRC8",
+                                      "comment":  "帧头 CRC8 校验",
+                                      "value":  0
+                                  },
+                                  {
+                                      "type":  "uint16_t",
+                                      "name":  "cmd_id",
+                                      "comment":  "控制命令 ID",
+                                      "value":  0
+                                  }
+                              ]
+               }
+}
